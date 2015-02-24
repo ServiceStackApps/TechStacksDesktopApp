@@ -1,6 +1,6 @@
 # TechStacks Desktop Cocoa OSX App
 
-The TechStacks OSX Desktop App is built around 2 simple AutoQuery Services showing how much querying functionality [AutoQuery Services](https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query) provides for free as well as how easy they are to call them with [ServiceStack's new support for Swift and XCode](https://github.com/ServiceStack/ServiceStack/wiki/Swift-Add-ServiceStack-Reference).
+The TechStacks OSX Desktop App is built around 2 AutoQuery Services showing how much querying functionality [AutoQuery Services](https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query) provides for free and how easy they are to call with [ServiceStack's new support for Swift and XCode](https://github.com/ServiceStack/ServiceStack/wiki/Swift-Add-ServiceStack-Reference).
 
 Behind the scenes the TechStacks Desktop app is essentially powered withby these 2 AutoQuery Services:
 
