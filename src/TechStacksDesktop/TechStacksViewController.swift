@@ -30,9 +30,9 @@ class TechStacksViewController : NSViewController, NSTableViewDataSource, NSTabl
         self.appData.searchTechStacks(txtSearch.stringValue,
             field: cboField.objectValueOfSelectedItem as? String,
             operand: cboQueryType.objectValueOfSelectedItem as? String)
-            .catch(body: {(e:NSError) -> Void in
+            .error { (e:NSError) in
                 self.lblError.stringValue = e.responseStatus.message ?? ""
-            })
+            }
     }
     
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class TechStacksViewController : NSViewController, NSTableViewDataSource, NSTabl
     }
     
     func populateComboBoxFields() {
-        let names = TechnologyStack.reflect().properties.map { $0.name.titleCase }
+        let names = TechnologyStack.properties.map { $0.name.titleCase }
         cboField.addItemsWithObjectValues(names)
         cboQueryType.addItemsWithObjectValues(appData.autoQueryOperands.map { $0.0 })
         
@@ -54,7 +54,7 @@ class TechStacksViewController : NSViewController, NSTableViewDataSource, NSTabl
         cboQueryType.selectItemAtIndex(0)
     }
 
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         tblResults.reloadData()
     }
     deinit { self.appData.unobserve(self) }
@@ -66,9 +66,9 @@ class TechStacksViewController : NSViewController, NSTableViewDataSource, NSTabl
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let name = tableColumn?.identifier {
             if let cell = tableView.makeViewWithIdentifier(name, owner: self) as? NSTableCellView {
-                if let property = TechnologyStack.reflect().propertiesMap[name.lowercaseString] {
+                if let property = TechnologyStack.propertyMap[name.lowercaseString] {
                     let dto = appData.filteredTechStacks[row]
-                    cell.textField?.stringValue = property.stringValue(dto) ?? ""
+                    cell.textField?.stringValue = property.stringValueAny(dto) ?? ""
                     return cell
                 }
             }

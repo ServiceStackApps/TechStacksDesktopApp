@@ -36,7 +36,7 @@ public class AppData : NSObject
     
     lazy public var autoQueryOperandsMap:[String:String] = {
         var map = [String:String]()
-        self.autoQueryOperands.map { map[$0] = $1 }
+        self.autoQueryOperands.forEach { map[$0] = $1 }
         return map
     }()
     
@@ -46,34 +46,34 @@ public class AppData : NSObject
         return mergedField
     }
     
-    func searchTechStacks(query:String, field:String? = nil, operand:String? = nil) -> Promise<QueryResponse<TechnologyStack>> {
+    func searchTechStacks(query:String, field:String? = nil, operand:String? = nil) -> Promise<FindTechStacksResponse> {
         self.search = query
         
         let queryString = query.count > 0 && field != nil && operand != nil
             ? [createAutoQueryParam(field!, operand!): query]
             : ["NameContains":query, "DescriptionContains":query]
         
-        let request = FindTechStacks<TechnologyStack>()
+        let request = FindTechStacks()
         return client.getAsync(request, query:queryString)
-            .then(body:{(r:QueryResponse<TechnologyStack>) -> QueryResponse<TechnologyStack> in
+            .then { r -> FindTechStacksResponse in
                 self.filteredTechStacks = r.results
                 return r
-            })
+            }
     }
     
-    func searchTechnologies(query:String, field:String? = nil, operand:String? = nil) -> Promise<QueryResponse<Technology>> {
+    func searchTechnologies(query:String, field:String? = nil, operand:String? = nil) -> Promise<FindTechnologiesResponse> {
         self.search = query
 
         let queryString = query.count > 0 && field != nil && operand != nil
             ? [createAutoQueryParam(field!, operand!): query]
             : ["NameContains":query, "DescriptionContains":query]
         
-        let request = FindTechnologies<Technology>()
+        let request = FindTechnologies()
         return client.getAsync(request, query:queryString)
-            .then(body:{(r:QueryResponse<Technology>) -> QueryResponse<Technology> in
+            .then { r -> FindTechnologiesResponse in
                 self.filteredTechnologies = r.results
                 return r
-            })
+            }
     }
 
     var observedProperties = [NSObject:[String]]()
@@ -86,7 +86,7 @@ public class AppData : NSObject
     }
     
     public func observe(observer: NSObject, property:String) {
-        self.addObserver(observer, forKeyPath: property, options: .New | .Old, context: &ctx)
+        self.addObserver(observer, forKeyPath: property, options: [.New, .Old], context: &ctx)
         
         var properties = observedProperties[observer] ?? [String]()
         properties.append(property)

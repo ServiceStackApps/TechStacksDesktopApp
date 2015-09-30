@@ -18,6 +18,7 @@
 		51CDF3D71A89331200F61F8B /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CDF3D61A89331200F61F8B /* UIExtensions.swift */; };
 		51CDF3DD1A893B5A00F61F8B /* TechStacksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CDF3DC1A893B5A00F61F8B /* TechStacksViewController.swift */; };
 		51CDF3DF1A8BC64700F61F8B /* TechnologyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51CDF3DE1A8BC64700F61F8B /* TechnologyViewController.swift */; };
+		51DFCCB91BBB5DEB004354D0 /* TechStacks.dtos.extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DFCCB81BBB5DEB004354D0 /* TechStacks.dtos.extras.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		51CDF3D61A89331200F61F8B /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		51CDF3DC1A893B5A00F61F8B /* TechStacksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechStacksViewController.swift; sourceTree = "<group>"; };
 		51CDF3DE1A8BC64700F61F8B /* TechnologyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechnologyViewController.swift; sourceTree = "<group>"; };
+		51DFCCB81BBB5DEB004354D0 /* TechStacks.dtos.extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechStacks.dtos.extras.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				51CDF3B91A89281900F61F8B /* ViewController.swift */,
 				512A43731A8DF09A007498CC /* JsonServiceClient.swift */,
 				512A43751A8DF09A007498CC /* TechStacks.dtos.swift */,
+				51DFCCB81BBB5DEB004354D0 /* TechStacks.dtos.extras.swift */,
 			);
 			path = TechStacksDesktop;
 			sourceTree = "<group>";
@@ -171,7 +174,9 @@
 		51CDF3AA1A89281900F61F8B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "ServiceStack LLC";
 				TargetAttributes = {
 					51CDF3B11A89281900F61F8B = {
@@ -235,6 +240,7 @@
 				512A43761A8DF09A007498CC /* TechStacks.dtos.swift in Sources */,
 				512A43741A8DF09A007498CC /* JsonServiceClient.swift in Sources */,
 				51CDF3D71A89331200F61F8B /* UIExtensions.swift in Sources */,
+				51DFCCB91BBB5DEB004354D0 /* TechStacks.dtos.extras.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +294,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -352,6 +359,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TechStacksDesktop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.servicestack.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -363,6 +371,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = TechStacksDesktop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.servicestack.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -382,6 +391,7 @@
 				);
 				INFOPLIST_FILE = TechStacksDesktopTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.servicestack.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TechStacksDesktop.app/Contents/MacOS/TechStacksDesktop";
 			};
@@ -398,6 +408,7 @@
 				);
 				INFOPLIST_FILE = TechStacksDesktopTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.servicestack.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TechStacksDesktop.app/Contents/MacOS/TechStacksDesktop";
 			};
