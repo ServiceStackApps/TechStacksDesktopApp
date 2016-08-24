@@ -6,10 +6,10 @@ Behind the scenes the TechStacks Desktop app is essentially powered withby these
 
 ```csharp
 [Query(QueryTerm.Or)] //change from filtering (default) to combinatory semantics
-public class FindTechStacks : QueryBase<TechnologyStack> {}
+public class FindTechStacks : QueryDb<TechnologyStack> {}
 
 [Query(QueryTerm.Or)]
-public class FindTechnologies : QueryBase<Technology> {}
+public class FindTechnologies : QueryDb<Technology> {}
 ```
 
 Basically just a Request DTO telling AutoQuery what Table we want to Query and that we want to [change the default Search behavior](https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query#changing-querying-behavior) to have **OR** semantics. We don't need to specify which properties we can query as the [implicit conventions](https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query#implicit-conventions) automatically infer it from the table being queried.
