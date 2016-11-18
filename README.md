@@ -27,36 +27,36 @@ The TechStacks Desktop UI is then built around these 2 AutoQuery Services allowi
 Like the TechStacks iOS App all Service Calls are maintained in a single [AppData.swift](https://github.com/ServiceStackApps/TechStacksDesktopApp/blob/master/src/TechStacksDesktop/AppData.swift) class and uses KVO bindings to update its UI which is populated from these 2 services below:
 
 ```swift
-func searchTechStacks(query:String, field:String? = nil, operand:String? = nil)
+func searchTechStacks(_ query:String, field:String? = nil, operand:String? = nil) 
   -> Promise<QueryResponse<TechnologyStack>> {
     self.search = query
-    
+
     let queryString = query.count > 0 && field != nil && operand != nil
         ? [createAutoQueryParam(field!, operand!): query]
         : ["NameContains":query, "DescriptionContains":query]
-    
+
     let request = FindTechStacks<TechnologyStack>()
     return client.getAsync(request, query:queryString)
-        .then(body:{(r:QueryResponse<TechnologyStack>) -> QueryResponse<TechnologyStack> in
+        .then { r -> QueryResponse<TechnologyStack> in
             self.filteredTechStacks = r.results
             return r
-        })
+        }
 }
 
-func searchTechnologies(query:String, field:String? = nil, operand:String? = nil)
+func searchTechnologies(_ query:String, field:String? = nil, operand:String? = nil) 
   -> Promise<QueryResponse<Technology>> {
     self.search = query
 
     let queryString = query.count > 0 && field != nil && operand != nil
         ? [createAutoQueryParam(field!, operand!): query]
         : ["NameContains":query, "DescriptionContains":query]
-    
+
     let request = FindTechnologies<Technology>()
     return client.getAsync(request, query:queryString)
-        .then(body:{(r:QueryResponse<Technology>) -> QueryResponse<Technology> in
+        .then { r -> QueryResponse<Technology> in
             self.filteredTechnologies = r.results
             return r
-        })
+        }
 }
 
 func createAutoQueryParam(field:String, _ operand:String) -> String {
