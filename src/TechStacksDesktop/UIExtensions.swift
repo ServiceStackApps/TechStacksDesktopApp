@@ -12,20 +12,20 @@ import Foundation
 extension NSView
 {
     var appData:AppData {
-        return (NSApplication.sharedApplication().delegate as! AppDelegate).appData
+        return (NSApplication.shared().delegate as! AppDelegate).appData
     }
 }
 
 extension NSViewController
 {
     var appData:AppData {
-        return (NSApplication.sharedApplication().delegate as! AppDelegate).appData
+        return (NSApplication.shared().delegate as! AppDelegate).appData
     }
 }
 
 extension NSTableView
 {
-    func addTableColumns(properties: [PropertyType]) {
+    func addTableColumns(_ properties: [PropertyType]) {
         for property in properties {
             let column = NSTableColumn(identifier: property.name)
             
@@ -36,22 +36,9 @@ extension NSTableView
 
 extension String {
     var titleCase:String {
-        return String(self[0]).uppercaseString + self[1..<self.count]
+        return String(self[0]).uppercased() + self[1..<self.count]
     }
     var count:Int {
         return self.characters.count
-    }
-}
-
-extension NSError {
-    var responseStatus:ResponseStatus {
-        let status:ResponseStatus = self.convertUserInfo() ?? ResponseStatus()
-        if status.errorCode == nil {
-            status.errorCode = self.code.toString()
-        }
-        if status.message == nil {
-            status.message = self.localizedDescription
-        }
-        return status
     }
 }

@@ -17,11 +17,11 @@ class TechnologyViewController : NSViewController, NSTableViewDataSource, NSTabl
     @IBOutlet weak var tblResults: NSTableView!
     @IBOutlet weak var lblError: NSTextField!
     
-    @IBAction func onSearchChange(sender: NSTextField) {
+    @IBAction func onSearchChange(_ sender: NSTextField) {
         search()
     }
     
-    @IBAction func search(sender: NSButton) {
+    @IBAction func search(_ sender: NSButton) {
         search()
     }
     
@@ -30,14 +30,14 @@ class TechnologyViewController : NSViewController, NSTableViewDataSource, NSTabl
         self.appData.searchTechnologies(txtSearch.stringValue,
             field: cboField.objectValueOfSelectedItem as? String,
             operand: cboQueryType.objectValueOfSelectedItem as? String)
-            .error { (e:NSError) -> Void in
+            .catch { e in
                 self.lblError.stringValue = e.responseStatus.message ?? ""
             }
     }
     
     override func viewDidLoad() {
-        tblResults.setDataSource(self)
-        tblResults.setDelegate(self)
+        tblResults.dataSource = self
+        tblResults.delegate = self
         populateComboBoxFields()
         
         self.appData.searchTechnologies(txtSearch.stringValue)
@@ -46,29 +46,29 @@ class TechnologyViewController : NSViewController, NSTableViewDataSource, NSTabl
     
     func populateComboBoxFields() {
         let names = Technology.properties.map { $0.name.titleCase }
-        cboField.addItemsWithObjectValues(names)
-        cboQueryType.addItemsWithObjectValues(appData.autoQueryOperands.map { $0.0 })
+        cboField.addItems(withObjectValues: names)
+        cboQueryType.addItems(withObjectValues: appData.autoQueryOperands.map { $0.0 })
         
         
-        cboField.selectItemAtIndex(0)
-        cboQueryType.selectItemAtIndex(0)
+        cboField.selectItem(at: 0)
+        cboQueryType.selectItem(at: 0)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         tblResults.reloadData()
     }
     deinit { self.appData.unobserve(self) }
     
-    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+    func numberOfRows(in tableView: NSTableView) -> Int {
         return appData.filteredTechnologies.count
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let name = tableColumn?.identifier {
-            if let cell = tableView.makeViewWithIdentifier(name, owner: self) as? NSTableCellView {
-                if let property = Technology.propertyMap[name.lowercaseString] {
+            if let cell = tableView.make(withIdentifier: name, owner: self) as? NSTableCellView {
+                if let property = Technology.propertyMap[name.lowercased()] {
                     let dto = appData.filteredTechnologies[row]
-                    cell.textField?.stringValue = property.stringValueAny(dto) ?? ""
+                    cell.textField?.stringValue = property.stringValueAny(instance: dto) ?? ""
                     return cell
                 }
             }
